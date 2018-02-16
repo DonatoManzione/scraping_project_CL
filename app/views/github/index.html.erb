@@ -1,0 +1,41 @@
+  <h1>Craigslist Developer Jobs</h1>
+<dl>
+  <% dom = Nokogiri::HTML(@profile.body) %>
+  <% job_titles = dom.css("a.hdrlnk").map do |element| %>
+  <% element.content %>
+  <% end %>
+  <% job_links = dom.css("a.hdrlnk").map do |element| %>
+  <% element.attr("href")%>
+  <% end %>
+
+  <% job_links&titles = job_titles.zip(job_links) %>
+
+  <table>
+    <tr>
+      <th>#</th>
+      <th>Jobs</th>
+      <th>Links to Job Posts</th>
+    </tr>
+    <tr>
+      <td>
+        <% job_links&titles.each_with_index do |x,i| %>
+        <%= "#{i}"%>
+        <br><br>
+        <%end%>
+      </td>
+      
+      <td>
+          <% job_links&titles.each_with_index do |x,i| %>
+          <%= "#{x[0]}"%>
+          <br><br>
+          <%end%>
+      </td>
+      <td>
+        <% job_links&titles.each_with_index do |x,i| %>
+        <%= link_to "#{x[1]}", "#{x[1]}"%>
+        <br><br>
+        <% end %>
+      </td>
+    </tr>
+    <tr></tr>
+  </table>
